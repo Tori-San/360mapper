@@ -15,7 +15,7 @@ cubeImg = Image(4 * tilesize, 3 * tilesize)
 tiles = [
     Tile((tilesize, tilesize), Vector(-1, 1, -1), Vector(2, 0, 0), Vector(0, -2, 0)),       # front
     Tile((2 * tilesize, tilesize), Vector(1, 1, -1), Vector(0, 0, 2), Vector(0, -2, 0)),    # right
-    Tile((0, tilesize), Vector(-1, 1, -1), Vector(0, 0, -2), Vector(0, -2, 0)),             # left
+    Tile((0, tilesize), Vector(-1, 1, 1), Vector(0, 0, -2), Vector(0, -2, 0)),             # left
     Tile((3 * tilesize, tilesize), Vector(1, 1, 1), Vector(-2, 0, 0), Vector(0, -2, 0)),    # back
     Tile((tilesize, 0), Vector(-1, 1, 1), Vector(2, 0, 0), Vector(0, 0, -2)),               # top
     Tile((tilesize, 2 * tilesize), Vector(-1, -1, -1), Vector(2, 0, 0), Vector(0, 0, 2))    # bottom
@@ -32,7 +32,7 @@ for t in tiles:
                 equatorialAngle = 2 * math.pi - equatorialAngle
             cubeImg[u + ou, v + ov] = sphereImg.interpolate(
                 equatorialAngle / (2 * math.pi),
-                zenithAngle / (2 * math.pi)
+                zenithAngle / math.pi
             )
 
 cubeImg.write(outputname)
