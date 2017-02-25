@@ -50,7 +50,7 @@ class Image:
         x, y = item
         x = min(self.width-1, max(0, x))
         y = min(self.height-1, max(0, y))
-        (r, g, b) = self.data.getpixel((x, y))
+        (r, g, b, _) = self.data.getpixel((x, y))
         return rgbcolor(r, g, b)
 
     def __setitem__(self, key, value):
