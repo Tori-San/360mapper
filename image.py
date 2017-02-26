@@ -36,21 +36,23 @@ class Image:
     def __init__(self, width=0, height=0):
         self.width = width
         self.height = height
-        self.data = Pimg.new("RGBA", (width, height))
+        self.data = [ 0 for _ in range(width * height) ]
 
     def read(self, filename):
-        im = Pimg.open(filename, "r")
-        self.width, self.height = im.size
-        self.data = im
+        with Pimg.open(filename, "r") as im:
+            self.width, self.height = im.size
+            self.data = im.getdata()
 
     def write(self, filename):
-        self.data.save(filename)
+        im = Pimg.new("RGBA", (self.width, self.height))
+        im.putdata(self.data)
+        im.save(filename)
 
     def __getitem__(self, item):
         x, y = item
         x = min(self.width-1, max(0, x))
         y = min(self.height-1, max(0, y))
-        (r, g, b, _) = self.data.getpixel((x, y))
+        (r, g, b, _) = self.data[self.width * y + x]
         return rgbcolor(r, g, b)
 
     def __setitem__(self, key, value):
@@ -58,8 +60,7 @@ class Image:
         x = min(self.width-1, max(0, x))
         y = min(self.height-1, max(0, y))
         r, g, b = clamp(value).getrgb()
-        #print("setpixel {} {} {} {}".format(key, r, g, b))
-        self.data.putpixel((x, y), (r, g, b))
+        self.data[self.width * y + x] = (r, g, b)
 
     def interpolate(self, u, v):
         x = u * self.width
