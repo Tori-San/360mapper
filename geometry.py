@@ -53,3 +53,6 @@ class Tile:
 
     def getray(self, x, y):
         return self.pos + x * self.vx + y * self.vy
+
+    def getpixel(self, x, y):
+        return self.offset[0] + x * self.vx, self.offset[1] + y * self.vy
