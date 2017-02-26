@@ -7,7 +7,7 @@ if len(sys.argv) < 2:
     sys.exit(1)
 else:
     filename = sys.argv[1]
-    outputname = ".".join(filename.split(".")[:-1]) + "_out.tiff"
+    outputname = ".".join(filename.split(".")[:-1]) + "_cube.tiff"
 
 sphereImg = Image()
 sphereImg.read(filename)
