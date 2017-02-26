@@ -44,7 +44,7 @@ class Image:
             self.data = im.getdata()
 
     def write(self, filename):
-        im = Pimg.new("RGBA", (self.width, self.height))
+        im = Pimg.new("RGB", (self.width, self.height))
         im.putdata(self.data)
         im.save(filename)
 
@@ -52,7 +52,7 @@ class Image:
         x, y = item
         x = min(self.width-1, max(0, x))
         y = min(self.height-1, max(0, y))
-        (r, g, b, _) = self.data[self.width * y + x]
+        (r, g, b) = self.data[self.width * y + x][:3]
         return rgbcolor(r, g, b)
 
     def __setitem__(self, key, value):
