@@ -27,19 +27,17 @@ progress = 0
 for t in tiles:
     ou, ov = t.offset
     for u in range(tilesize):
-        newprogress = progress + 1
-        if newprogress - progress > 0.01:
-            progress = newprogress
-            print ("{:.2f}".format(progress / (len(tiles) * tilesize)))
+        progress += 1
+        print(5 * "\r" + "{:.2f}%".format(100 * progress / (len(tiles) * tilesize)), end='')
         for v in range(tilesize):
             x, y, z = normalise(t.getray(u / tilesize, v / tilesize)).components()
 
-            phi = math.atan2(x, z) % (2 * math.pi)
+            phi = -math.atan2(x, z) % (2 * math.pi)
             theta = math.acos(y)
 
             cubeImg[u + ou, v + ov] = sphereImg.interpolate(
                     phi / (2 * math.pi),
                     theta / math.pi
                     )
-
+print("")
 cubeImg.write(outputname)
