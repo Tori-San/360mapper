@@ -31,8 +31,8 @@ for v in range(sphereImg.height):
     for u in range(sphereImg.width):
         progress += 1
 #        print(5 * "\r" + "{:.2f}%".format(100 * progress / (sphereImg.width * sphereImg.height)), end = '')
-        phi = 2 * math.pi * u / sphereImg.width
-        theta = math.pi * v / sphereImg.height
+        phi = 2 * math.pi * (1 - (u + 0.5) / sphereImg.width)
+        theta = math.pi * (v + 0.5) / sphereImg.height
 
         y = math.cos(theta)
         x = math.sin(theta) * math.sin(phi)
@@ -51,11 +51,14 @@ for v in range(sphereImg.height):
             hit = "back" if z > 0 else "front"
             hu = x / abs(z)
             hv = y / abs(z)
+        assert(-1 <= hu <= 1 and -1 <= hv <= 1)
+        print("hit {} at ({}, {})".format(hit, hu, hv))
         hu, hv = tiles[hit].getpixel(hu, hv)
+        print("lerping pixel value at ({}, {})".format(hu, hv))
         hu /= sphereImg.width
         hv /= sphereImg.height
-        print("hit {} at ({}, {})".format(hit, hu, hv))
         sphereImg[u, v] = cubeImg.interpolate(hu, hv)
+        #sphereImg[u, v] = Color(*(3 * ((1 if hit == "bottom" else 0),)))
 
 print("")
 sphereImg.write(outputname)
