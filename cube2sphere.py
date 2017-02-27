@@ -30,7 +30,7 @@ progress = 0
 for v in range(sphereImg.height):
     for u in range(sphereImg.width):
         progress += 1
-#        print(5 * "\r" + "{:.2f}%".format(100 * progress / (sphereImg.width * sphereImg.height)), end = '')
+        print(5 * "\r" + "{:.2f}%".format(100 * progress / (sphereImg.width * sphereImg.height)), end = '')
         phi = 2 * math.pi * (1 - (u + 0.5) / sphereImg.width)
         theta = math.pi * (v + 0.5) / sphereImg.height
 
