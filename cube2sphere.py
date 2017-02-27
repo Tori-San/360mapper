@@ -18,11 +18,11 @@ def mktile(u, v, su, sv):
     return Tile(((u + 0.5) * tilesize, (v + 0.5) * tilesize), None, su * tilesize / 2, sv * tilesize / 2)
 
 tiles = {
-        "top":      mktile(1, 0, 1, 1),
-        "left":     mktile(0, 1, 1, 1),
-        "front":    mktile(1, 1, 1, 1),
-        "right":    mktile(2, 1, 1, 1),
-        "back":     mktile(3, 1, 1, 1),
+        "top":      mktile(1, 0, 1, -1),
+        "left":     mktile(0, 1, -1, -1),
+        "front":    mktile(1, 1, 1, -1),
+        "right":    mktile(2, 1, 1, -1),
+        "back":     mktile(3, 1, -1, -1),
         "bottom":   mktile(1, 2, 1, 1)
         }
 
@@ -52,13 +52,9 @@ for v in range(sphereImg.height):
             hu = x / abs(z)
             hv = y / abs(z)
         assert(-1 <= hu <= 1 and -1 <= hv <= 1)
-        print("hit {} at ({}, {})".format(hit, hu, hv))
-        hu, hv = tiles[hit].getpixel(hu, hv)
-        print("lerping pixel value at ({}, {})".format(hu, hv))
-        hu /= sphereImg.width
-        hv /= sphereImg.height
-        sphereImg[u, v] = cubeImg.interpolate(hu, hv)
-        #sphereImg[u, v] = Color(*(3 * ((1 if hit == "bottom" else 0),)))
+        #sphereImg[u, v] = Color(1 + hu, 1 + hv, 0)
+        uu, vv = tiles[hit].getpixel(hu, hv)
+        sphereImg[u, v] = cubeImg.interpolate(uu / cubeImg.width, vv / cubeImg.height)
 
 print("")
 sphereImg.write(outputname)
