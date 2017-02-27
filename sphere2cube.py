@@ -30,7 +30,7 @@ for t in tiles:
         progress += 1
         print(5 * "\r" + "{:.2f}%".format(100 * progress / (len(tiles) * tilesize)), end='')
         for v in range(tilesize):
-            x, y, z = normalise(t.getray(u / tilesize, v / tilesize)).components()
+            x, y, z = normalise(t.getray((u + 0.5) / tilesize, (v + 0.5) / tilesize)).components()
 
             phi = -math.atan2(x, z) % (2 * math.pi)
             theta = math.acos(y)
